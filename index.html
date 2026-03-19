@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WriterSpace</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+* {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #0f766e, #1e293b);
+    min-height: 100vh;
+}
+
+/* Navbar */
+nav {
+    width: 100%;
+    padding: 15px 40px;
+    background: #1f1f1f;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #0bcc0b;
+}
+
+.menu-btn {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.menu-btn div {
+    width: 28px;
+    height: 3px;
+    background: white;
+    border-radius: 5px;
+}
+
+/* Cards */
+.story-card {
+    transition: all 0.25s ease;
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.15);
+}
+
+/* Responsive nav */
+@media (max-width: 768px) {
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        background: #1f1f1f;
+        width: 220px;
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        display: none;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .menu-btn {
+        display: flex;
+    }
+}
+</style>
+</head>
+
+<body class="p-4 sm:p-8">
+
+<nav>
+    <h2 class="logo">WE WRITE</h2>
+
+    <div class="menu-btn" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="service.html">Service</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+
+<div class="max-w-4xl mx-auto mt-8">
+
+<header class="text-center mb-12">
+    <h1 class="text-5xl sm:text-6xl font-extrabold text-white mb-4">
+        WriterSpace
+    </h1>
+    <p class="text-lg sm:text-xl text-indigo-200 max-w-2xl mx-auto">
+        A creative space where writers share raw thoughts, short stories,
+        and ideas — no filters, just words.
+    </p>
+</header>
+
+<!-- Buttons -->
+<div class="flex justify-center mb-10 gap-2">
+    <button id="list-btn"
+        class="px-6 py-3 rounded-xl text-sm font-semibold bg-indigo-600 text-white shadow-lg">
+        📖 Read Stories
+    </button>
+    <button id="create-btn"
+        class="px-6 py-3 rounded-xl text-sm font-semibold bg-white text-gray-800 shadow-lg">
+        ✍️ Write a Story
+    </button>
+</div>
+
+<!-- Story List -->
+<section id="list-section">
+    <div id="storiesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+</section>
+
+<!-- Create Story -->
+<section id="create-section" class="hidden">
+    <div class="bg-white p-6 sm:p-8 rounded-xl shadow-2xl">
+        <h2 class="logo mb-6">✍️ WeWrite</h2>
+
+        <form id="story-form" class="space-y-6">
+            <div>
+                <label class="block text-lg font-medium mb-2">Title</label>
+                <input id="story-title" required maxlength="100"
+                    class="w-full p-3 border-2 rounded-lg">
+            </div>
+
+            <div>
+                <label class="block text-lg font-medium mb-2">Story</label>
+                <textarea id="story-content" rows="10" required maxlength="10000"
+                    class="w-full p-4 border-2 rounded-lg"></textarea>
+            </div>
+
+            <div class="flex justify-end">
+                <button class="px-8 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+                    Publish Story
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+</div>
+
+<script>
+// Navbar toggle
+function toggleMenu() {
+    document.getElementById("navLinks").classList.toggle("active");
+}
+
+// Sections toggle
+const listBtn = document.getElementById('list-btn');
+const createBtn = document.getElementById('create-btn');
+const listSection = document.getElementById('list-section');
+const createSection = document.getElementById('create-section');
+
+listBtn.onclick = () => {
+    listSection.classList.remove('hidden');
+    createSection.classList.add('hidden');
+};
+
+createBtn.onclick = () => {
+    listSection.classList.add('hidden');
+    createSection.classList.remove('hidden');
+};
+
+// Stories logic
+const storyForm = document.getElementById('story-form');
+const storiesContainer = document.getElementById('storiesContainer');
+
+let stories = JSON.parse(localStorage.getItem('stories') || '[]');
+
+function saveStories() {
+    localStorage.setItem('stories', JSON.stringify(stories));
+}
+
+function renderStories() {
+    storiesContainer.innerHTML = stories.map((s, i) => `
+        <div class="story-card bg-white p-5 rounded-xl">
+            <h3 class="font-bold text-xl">${s.title}</h3>
+            <p class="mt-3 text-gray-600">${s.content}</p>
+            <div class="flex justify-between mt-4 text-sm text-gray-500">
+                <button onclick="likeStory(${i})">❤️ ${s.likes}</button>
+                <button onclick="deleteStory(${i})">🗑️ Delete</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+storyForm.onsubmit = e => {
+    e.preventDefault();
+    stories.push({
+        title: storyForm['story-title'].value,
+        content: storyForm['story-content'].value,
+        likes: 0
+    });
+    saveStories();
+    renderStories();
+    storyForm.reset();
+    listBtn.click();
+};
+
+function likeStory(i) {
+    stories[i].likes++;
+    saveStories();
+    renderStories();
+}
+
+function deleteStory(i) {
+    stories.splice(i, 1);
+    saveStories();
+    renderStories();
+}
+
+renderStories();
+</script>
+
+</body>
+</html>

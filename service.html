@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Services</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+body {
+    font-family: 'Inter', sans-serif;
+    background: #f0f4f8;
+}
+
+nav {
+    background: #0f766e;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+nav a {
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #a7f3d0;
+}
+
+h1 {
+    color: #0f766e;
+}
+
+.service-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+}
+
+.service-card h2 {
+    color: #065f46;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    color: #374151;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 20px;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="service.html">Service</a>
+</nav>
+
+<!-- Main Content -->
+<main class="max-w-5xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-4xl font-extrabold text-center mb-10">Our Services</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="service-card">
+            <h2 class="text-2xl font-semibold">Free-Will Writing</h2>
+            <p>Write anything you want—poetry, stories, essays, or personal thoughts. Express yourself without limits in a supportive environment.</p>
+        </div>
+
+        <div class="service-card">
+            <h2 class="text-2xl font-semibold">Immediate Community Feedback</h2>
+            <p>Share your work and get comments from real people instantly. Learn, grow, and engage with other writers who care about your creativity.</p>
+        </div>
+
+        <div class="service-card">
+            <h2 class="text-2xl font-semibold">Creative Challenges & Prompts</h2>
+            <p>Participate in regular writing prompts and challenges to spark your imagination and push your skills further.</p>
+        </div>
+
+        <div class="service-card">
+            <h2 class="text-2xl font-semibold">Safe & Supportive Space</h2>
+            <p>Our platform ensures a respectful and encouraging environment so you can focus on writing without fear of negativity.</p>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
